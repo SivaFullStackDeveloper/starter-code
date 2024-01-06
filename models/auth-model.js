@@ -10,7 +10,7 @@ const UserSchema = new mongoose.Schema({
         type:String,
         required:[true, "Please Provide Name"],
     },
-
+   
     password:{
         type:String,
         required:[true, "Please Provide Password"],
@@ -33,10 +33,8 @@ const UserSchema = new mongoose.Schema({
     alternateNumber:{
         type:String,
     },
-
-    },{
-        timeStamps:true
-    }
+   
+},  { timestamps: true }
 );
 
 

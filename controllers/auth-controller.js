@@ -5,38 +5,6 @@ const  BadRequestError = require('../error/bad-request')
 const  UnAuthenticatedError = require('../error/unauthenticated')
 
 
-const userAlreadyExists = async(req,res)=>{
-    const  { email,phoneNumber} = req.body 
-    if(email ===" " ||phoneNumber ===" "){
-        return res.status(StatusCodes.BAD_REQUEST).json({
-            "message":"Please enter required fields email or phone number ",
-            "alreadyExists":true,
-            "statusCode":StatusCodes.BAD_REQUEST
-        })
-    }
-    const emailAlreadyExists = await UserSchema.findOne({email})
-    if(emailAlreadyExists){
-        return  res.status(200).json({
-            "message":"Email Already Exists",
-            "alreadyExists":true,
-            "statusCode":StatusCodes.OK
-        })
-    }
-    const phoneNumberAlreadyExists = await UserSchema.findOne({phoneNumber})
-    if(phoneNumberAlreadyExists){
-       return  res.status(200).json({
-            "message":"Phone Number Already Exists",
-            "alreadyExists":true,
-            "statusCode":StatusCodes.OK
-        })
-    }
-
-    res.status(200).json({
-        "message":"Nothing found",
-        "alreadyExists":false,
-        "statusCode":StatusCodes.OK
-    })
-}
 
 const register = async(req,res)=>{
 
@@ -44,7 +12,7 @@ const register = async(req,res)=>{
     const token =  user.createJwt(user._id,user.name)
 
     res.status(StatusCodes.CREATED).json({
-        data:"data need to send",
+        data:'data need to be send',
         "msg":"user registered successfully",
         "statusCode":StatusCodes.OK,
        })
@@ -62,14 +30,14 @@ const login = async(req,res)=>{
         throw new UnAuthenticatedError('Invalid Credentials')  
     }
 
-    const isPassword = user.comparePassword(password)
+    const isPassword = await user.comparePassword(password)
     if(!isPassword){
         throw new UnAuthenticatedError('Invalid Credentials')  
     }
  const token = user.createJwt(user._id,user.name)
 
     res.status(StatusCodes.OK).json({
-      data:"",
+        data:'data need to be send',
         "msg":"user loggedIn successfully",
         "statusCode":StatusCodes.OK,
         "success":true,
@@ -79,4 +47,4 @@ const login = async(req,res)=>{
 
 
 
-module.exports = {login,register,userAlreadyExists}
+module.exports = {login,register}

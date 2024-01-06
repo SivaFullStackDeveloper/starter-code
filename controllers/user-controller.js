@@ -11,8 +11,7 @@ const updateUser = async(req,res)=>{
   }) 
 
  res.status(StatusCodes.OK).json({
-  data:"data needs to be send",
-  "msg":"Data updated successfully",
+  data: "Data needs to be send ", 
   "status code":StatusCodes.OK,
   "success":true,
 })
